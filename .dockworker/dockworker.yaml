@@ -1,0 +1,53 @@
+dockworker:
+  version: '6'
+  application:
+    name: Redis Instance for Library digitalrepository Sites
+    uri: https://digitalrepository.redis.lib.unb.ca
+    description: >
+      A Redis instance used by digitalrepository.lib.unb.ca.
+    topics:
+      - redis
+      - digitalrepository
+    identifiers:
+      id: digitalrepository.redis.lib.unb.ca
+      slug: digitalrepository-redis-lib-unb-ca
+      short_slug: dredis
+      uuid: 3582
+    framework:
+      name: Redis
+      version: 7
+      startup_finished_marker: 'Ready to accept connections'
+      endpoint:
+        name: redis
+        port: 3306
+        readiness_timeout: 15
+    license:
+      license: MIT
+      holder: University of New Brunswick Libraries
+    shell:
+      path: /bin/sh
+  endpoints:
+    env:
+      - dev
+      - prod
+    deployments:
+      digitalrepository-redis-lib-unb-ca:
+        default: true
+        managed: true
+        name: digitalrepository-redis-lib-unb-ca
+  workflows:
+    vcs:
+      type: github
+      owner: unb-libraries
+      name: digitalrepository.redis.lib.unb.ca
+    jira:
+      project_keys:
+        - IN
+    image:
+      name: ghcr.io/unb-libraries/digitalrepository.redis.lib.unb.ca
+      parent: redis:7-alpine
+      repository: GitHub
+      push-branches:
+        - dev
+        - prod
+        - 7.x

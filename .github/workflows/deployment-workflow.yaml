@@ -1,0 +1,22 @@
+name: Deploy digitalrepository.redis.lib.unb.ca
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: unb-libraries/dockworker/.github/workflows/build-push-deploy-notify.yaml@6.x
+    with:
+      branch-env-map: '{"dev":"dev","prod":"prod","7.x":"7.x"}'
+      build-themes: false
+      deploy-branches: '["dev","prod"]'
+      image-name: "ghcr.io/unb-libraries/digitalrepository.redis.lib.unb.ca"
+      k8s-deployment-name: "digitalrepository-redis-lib-unb-ca"
+      push-branches: '["dev","prod","7.x"]'
+    secrets:
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
+      GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
