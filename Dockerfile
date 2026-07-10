@@ -1,7 +1,7 @@
 FROM redis:7-alpine
 
-ENV REDIS_CONF_FILE /usr/local/etc/redis/redis.conf
-ENV REDIS_MAX_MEMORY 8000000000
+ENV REDIS_CONF_FILE="/usr/local/etc/redis/redis.conf"
+ENV REDIS_MAX_MEMORY="8000000000"
 
 COPY ./build /build
 RUN mv /build/scripts /scripts && \
